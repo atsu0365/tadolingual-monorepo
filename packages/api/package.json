@@ -1,0 +1,45 @@
+{
+  "name": "@tadolingual/api",
+  "version": "1.0.0",
+  "description": "API service for Tadolingual applications",
+  "keywords": [
+    "api",
+    "backend",
+    "service"
+  ],
+  "author": "atsu0365 <ngsk.takeshita@gmail.com>",
+  "homepage": "",
+  "license": "MIT",
+  "main": "index.js",
+  "types": "dist/index.d.ts",
+  "directories": {
+    "lib": "src",
+    "test": "__tests__"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "lint": "eslint . --ext .ts",
+    "start": "node dist/index.js",
+    "dev": "ts-node-dev --respawn src/index.ts"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.7.10",
+    "eslint": "^7.32.0",
+    "jest": "^27.1.0",
+    "ts-jest": "^27.0.5",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.4.2"
+  }
+}

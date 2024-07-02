@@ -1,0 +1,15 @@
+{
+  "name": "tadolingual-monorepo",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npx lerna run build",
+    "test": "npx lerna run test",
+    "lint": "npx lerna run lint"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}

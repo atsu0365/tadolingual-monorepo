@@ -1,0 +1,43 @@
+{
+  "name": "@tadolingual/i18n",
+  "version": "1.0.0",
+  "description": "Internationalization resources for Tadolingual",
+  "keywords": [
+    "i18n",
+    "localization",
+    "translations",
+    "tadolingual"
+  ],
+  "author": "atsu0365 <ngsk.takeshita@gmail.com>",
+  "homepage": "",
+  "license": "MIT",
+  "main": "index.js",
+  "types": "dist/index.d.ts",
+  "directories": {
+    "lib": "src",
+    "test": "__tests__"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "lint": "eslint . --ext .ts",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "i18next": "^20.3.5"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.7.10",
+    "eslint": "^7.32.0",
+    "jest": "^27.1.0",
+    "ts-jest": "^27.0.5",
+    "typescript": "^4.4.2"
+  }
+}

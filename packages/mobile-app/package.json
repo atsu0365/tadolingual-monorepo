@@ -1,0 +1,60 @@
+{
+  "name": "@tadolingual/mobile-app",
+  "version": "1.0.0",
+  "description": "Mobile application for Tadolingual",
+  "keywords": [
+    "mobile",
+    "app",
+    "language",
+    "learning",
+    "tadolingual",
+    "react-native"
+  ],
+  "author": "atsu0365 <ngsk.takeshita@gmail.com>",
+  "homepage": "https://github.com/atsu0365/tadolingual-monorepo#readme",
+  "license": "MIT",
+  "main": "index.js",
+  "directories": {
+    "src": "src",
+    "test": "__tests__"
+  },
+  "files": [
+    "src"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atsu0365/tadolingual-monorepo.git"
+  },
+  "scripts": {
+    "start": "react-native start",
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "test": "jest",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-native": "^0.66.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.0",
+    "@babel/runtime": "^7.15.0",
+    "@react-native-community/eslint-config": "^3.0.0",
+    "@types/jest": "^27.0.1",
+    "@types/react": "^17.0.20",
+    "@types/react-native": "^0.66.0",
+    "@types/react-test-renderer": "^17.0.1",
+    "babel-jest": "^27.1.0",
+    "eslint": "^8.0.0",
+    "jest": "^27.1.0",
+    "metro-react-native-babel-preset": "^0.66.2",
+    "react-test-renderer": "^17.0.2",
+    "typescript": "^4.4.2"
+  },
+  "bugs": {
+    "url": "https://github.com/atsu0365/tadolingual-monorepo/issues"
+  }
+}
