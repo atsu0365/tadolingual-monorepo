@@ -1,19 +1,5 @@
-const { Article, BlogPost, AffiliateLink, WebMedia } = require('../src/index');
+import { hello } from '../src';
 
-describe('Media package', () => {
-  test('exports Article', () => {
-    expect(Article).toBeDefined();
-  });
-
-  test('exports BlogPost', () => {
-    expect(BlogPost).toBeDefined();
-  });
-
-  test('exports AffiliateLink', () => {
-    expect(AffiliateLink).toBeDefined();
-  });
-
-  test('exports WebMedia', () => {
-    expect(WebMedia).toBeDefined();
-  });
+test('media function returns correct greeting', () => {
+  expect(hello()).toBe('Hello from media');
 });
