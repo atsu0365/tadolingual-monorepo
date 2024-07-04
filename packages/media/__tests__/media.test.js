@@ -1,10 +1,19 @@
-'use strict';
+const { Article, BlogPost, AffiliateLink, WebMedia } = require('../src/index');
 
-const media = require('..');
-const assert = require('assert').strict;
+describe('Media package', () => {
+  test('exports Article', () => {
+    expect(Article).toBeDefined();
+  });
 
-describe('media', () => {
-  it('should return a greeting', () => {
-    assert.strictEqual(media(), 'Hello from media');
+  test('exports BlogPost', () => {
+    expect(BlogPost).toBeDefined();
+  });
+
+  test('exports AffiliateLink', () => {
+    expect(AffiliateLink).toBeDefined();
+  });
+
+  test('exports WebMedia', () => {
+    expect(WebMedia).toBeDefined();
   });
 });

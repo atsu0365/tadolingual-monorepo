@@ -1,7 +1,20 @@
-'use strict';
+cat << EOF > src/webmedia.js
+class WebMedia {
+  constructor(title, content, author) {
+    this.title = title;
+    this.content = content;
+    this.author = author;
+    this.publishDate = new Date();
+  }
 
-module.exports = media;
+  getPreview() {
+    return this.content.substring(0, 100) + '...';
+  }
 
-function media() {
-  return 'Hello from media';
+  getPublishDateFormatted() {
+    return this.publishDate.toLocaleDateString();
+  }
 }
+
+module.exports = WebMedia;
+EOF

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title><%= title %> | 英語多読マスター</title>
+    <meta name="description" content="<%= content.substring(0, 160) %>">
+</head>
+<body>
+    <header>
+        <h1>英語多読マスター</h1>
+        <nav>
+            <% getAllCategories().forEach(function(cat) { %>
+                <a href="/category/<%= cat %>"><%= cat %></a>
+            <% }); %>
+        </nav>
+    </header>
+    <main>
+        <article>
+            <h2><%= title %></h2>
+            <p>カテゴリ: <%= category %></p>
+            <p>著者: <%= author %></p>
+            <div><%= content %></div>
+        </article>
+    </main>
+    <footer>
+        <p>&copy; 2024 英語多読マスター</p>
+    </footer>
+</body>
+</html>
