@@ -1,4 +1,27 @@
-node_modules/node_modules/
+# 依存関係
+node_modules/
+
+# ビルド出力
 dist/
-.DS_Store
+build/
+
+# 環境変数
+.env
+
+# ログ
 *.log
+
+# OS生成ファイル
+.DS_Store
+Thumbs.db
+
+# エディタ固有のファイル
+.vscode/
+.idea/
+
+# テスト関連
+coverage/
+
+# その他
+*.tmp
+*.bak
