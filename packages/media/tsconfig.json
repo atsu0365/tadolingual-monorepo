@@ -1,12 +1,17 @@
 {
-  "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "allowJs": true,
+    "checkJs": false,
     "outDir": "./dist",
     "rootDir": "./src",
-    "lib": ["ES2015"],
-    "types": ["node", "jest"],
-    "skipLibCheck": true
+    "strict": false,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": false
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "**/__tests__/*", "dist"]
+  "exclude": ["node_modules", "**/*.spec.ts"]
 }

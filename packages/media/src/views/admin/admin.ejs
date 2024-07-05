@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理画面 - 英語多読マスター</title>
+    <link rel="stylesheet" href="/admin-styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>記事管理</h1>
+        <form id="articleForm">
+            <input type="hidden" id="articleId">
+            <input type="text" id="title" placeholder="タイトル" required>
+            <textarea id="content" placeholder="内容" required></textarea>
+            <input type="text" id="image" placeholder="画像URL" required>
+
+            <input type="text" id="author" placeholder="著者" required>
+            <select id="category" required>
+                <option value="">カテゴリーを選択</option>
+                <option value="多読のコツと方法">多読のコツと方法</option>
+                <option value="多読の効果">多読の効果</option>
+                <option value="多読入門">多読入門</option>
+                <option value="多読の教材">多読の教材</option>
+            </select>
+            <div class="button-group">
+                <button type="button" id="previewButton">プレビュー</button>
+                <button type="submit" id="submitButton">記事を投稿</button>
+            </div>
+        </form>
+        <div id="message"></div>
+        <div id="preview" class="preview-container" style="display: none;">
+            <h2>プレビュー</h2>
+            <div id="previewContent"></div>
+        </div>
+        
+        <h2>記事一覧</h2>
+        <div id="articleList"></div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const articleForm = document.getElementById('articleForm');
+            const previewButton = document.getElementById('previewButton');
+            const previewContainer = document.getElementById('preview');
+            const previewContent = document.getElementById('previewContent');
+            const submitButton = document.getElementById('submitButton');
+            const articleList = document.getElementById('articleList');
+
+            async function fetchAndDisplayArticles() {
+                try {
+                    const response = await fetch('/articles', {
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const articles = await response.json();
+                    articleList.innerHTML = articles.map(article => `
+                        <div class="article-item">
+                            <h3>${article.title}</h3>
+                            <p>著者: ${article.author}</p>
+                            <p>カテゴリー: ${article.category}</p>
+                            <button onclick="editArticle('${article._id}')">編集</button>
+                            <button onclick="deleteArticle('${article._id}')">削除</button>
+                        </div>
+                    `).join('');
+                } catch (error) {
+                    console.error('Error fetching articles:', error);
+                    articleList.innerHTML = `<p>記事の取得中にエラーが発生しました: ${error.message}</p>`;
+                }
+            }
+
+            fetchAndDisplayArticles();
+
+            previewButton.addEventListener('click', function() {
+                const title = document.getElementById('title').value;
+                const content = document.getElementById('content').value;
+                const author = document.getElementById('author').value;
+                const category = document.getElementById('category').value;
+
+                const previewHtml = `
+                    <h1>${title}</h1>
+                    <p><strong>著者:</strong> ${author}</p>
+                    <p><strong>カテゴリー:</strong> ${category}</p>
+                    <div>${content}</div>
+                `;
+
+                previewContent.innerHTML = previewHtml;
+                previewContainer.style.display = 'block';
+            });
+
+            articleForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const formData = {
+                    title: document.getElementById('title').value,
+                    content: document.getElementById('content').value,
+                    author: document.getElementById('author').value,
+                    category: document.getElementById('category').value,
+                    image: document.getElementById('image').value
+                };
+                console.log('Sending form data:', formData);
+                const articleId = document.getElementById('articleId').value;
+                const url = articleId ? `/article/${articleId}` : '/article';
+                const method = articleId ? 'PUT' : 'POST';
+
+                try {
+                    const response = await fetch(url, {
+                        method: method,
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData),
+                    });
+                    const result = await response.json();
+                    if (response.ok) {
+                        console.log('Article saved:', result);
+                        document.getElementById('message').innerHTML = '<div class="success-message">記事が保存されました</div>';
+                        articleForm.reset();
+                        document.getElementById('articleId').value = '';
+                        submitButton.textContent = '記事を投稿';
+                        previewContainer.style.display = 'none';
+                        fetchAndDisplayArticles();
+                    } else {
+                        console.error('Error saving article:', result);
+                        document.getElementById('message').innerHTML = `<div class="error-message">エラーが発生しました: ${result.error || '不明なエラー'}</div>`;
+                    }
+                } catch (error) {
+                    console.error('Fetch error:', error);
+                    document.getElementById('message').innerHTML = `<div class="error-message">ネットワークエラーが発生しました: ${error.message}</div>`;
+                }
+            });
+        });
+
+        async function editArticle(id) {
+            try {
+                const response = await fetch(`/article/${id}`);
+                if (response.ok) {
+                    const article = await response.json();
+                    document.getElementById('articleId').value = article._id;
+                    document.getElementById('title').value = article.title;
+                    document.getElementById('content').value = article.content;
+                    document.getElementById('author').value = article.author;
+                    document.getElementById('category').value = article.category;
+                    document.getElementById('submitButton').textContent = '記事を更新';
+                } else {
+                    const errorData = await response.json();
+                    alert(`記事の取得に失敗しました: ${errorData.error || '不明なエラー'}`);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert(`記事の取得中にエラーが発生しました: ${error.message}`);
+            }
+        }
+
+        async function deleteArticle(id) {
+            if (confirm('本当にこの記事を削除しますか？')) {
+                try {
+                    const response = await fetch(`/article/${id}`, {
+                        method: 'DELETE'
+                    });
+                    if (response.ok) {
+                        alert('記事が削除されました。');
+                        fetchAndDisplayArticles();
+                    } else {
+                        const errorData = await response.json();
+                        alert(`記事の削除に失敗しました: ${errorData.error || '不明なエラー'}`);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert(`記事の削除中にエラーが発生しました: ${error.message}`);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
